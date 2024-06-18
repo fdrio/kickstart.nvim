@@ -243,6 +243,15 @@ require('lazy').setup({
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
+  {
+    's1n7ax/nvim-search-and-replace',
+    config = function()
+      require('nvim-search-and-replace').setup()
+    end,
+  },
+  { 'mg979/vim-visual-multi' },
+  { 'norcalli/nvim-colorizer.lua' },
+  { 'tpope/vim-fugitive' },
   -- bufferline
   {
     'akinsho/bufferline.nvim',
@@ -335,6 +344,7 @@ require('lazy').setup({
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
         ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
         ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
+        ['<leader>g'] = { name = '[G]rep replace', _ = 'which_key_ignore' },
       }
       -- visual mode
       require('which-key').register({
