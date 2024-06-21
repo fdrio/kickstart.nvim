@@ -252,22 +252,6 @@ require('lazy').setup({
   { 'mg979/vim-visual-multi' },
   { 'norcalli/nvim-colorizer.lua' },
   { 'tpope/vim-fugitive' },
-  -- bufferline
-  {
-    'akinsho/bufferline.nvim',
-    version = '*',
-    dependencies = 'nvim-tree/nvim-web-devicons',
-    config = function()
-      require('bufferline').setup {
-        options = {
-          separator_style = 'slant',
-          diagnostics = 'nvim_lsp', -- | "nvim_lsp" | "coc",
-          diagnostics_update_in_insert = false,
-          always_show_bufferline = true,
-        },
-      }
-    end,
-  },
   {
     'akinsho/toggleterm.nvim',
     version = '*',
@@ -296,23 +280,23 @@ require('lazy').setup({
       }
     end,
   },
-  -- Here is a more advanced example where we pass configuration
-  -- options to `gitsigns.nvim`. This is equivalent to the following Lua:
-  --    require('gitsigns').setup({ ... })
-  --
-  -- See `:help gitsigns` to understand what the configuration keys do
-  { -- Adds git related signs to the gutter, as well as utilities for managing changes
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-    },
-  },
+  -- -- Here is a more advanced example where we pass configuration
+  -- -- options to `gitsigns.nvim`. This is equivalent to the following Lua:
+  -- --    require('gitsigns').setup({ ... })
+  -- --
+  -- -- See `:help gitsigns` to understand what the configuration keys do
+  -- { -- Adds git related signs to the gutter, as well as utilities for managing changes
+  --   'lewis6991/gitsigns.nvim',
+  --   opts = {
+  --     signs = {
+  --       add = { text = '+' },
+  --       change = { text = '~' },
+  --       delete = { text = '_' },
+  --       topdelete = { text = '‾' },
+  --       changedelete = { text = '~' },
+  --     },
+  --   },
+  -- },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
@@ -848,6 +832,18 @@ require('lazy').setup({
     -- If you want to see what colorschemes are already installe, you can use `:Telescope colorscheme`.
     'EdenEast/nightfox.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
+    config = function()
+      require('nightfox').setup {
+        options = {
+          styles = {
+            --comments = "italic",
+            keywords = 'bold',
+            types = 'bold',
+            --functions = "bold",
+          },
+        },
+      }
+    end,
     init = function()
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
@@ -879,7 +875,9 @@ require('lazy').setup({
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
-
+      require('mini.starter').setup()
+      require('mini.tabline').setup()
+      require('mini.diff').setup()
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
