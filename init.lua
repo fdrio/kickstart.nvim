@@ -923,7 +923,129 @@ require('lazy').setup({
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      local colors = {
+        darkblue = '#005577',
+        darkgreen = '#027220',
+        green = '#2c8949',
+        yellow = '#f4bb40',
+        blue = '#80a0ff',
+        darkcyan = '#245758',
+        cyan = '#79dac8',
+        black = '#080808',
+        white = '#c6c6c6',
+        red = '#ff5189',
+        violet = '#d183e8',
+        wine = '#542a68',
+        grey = '#202020',
+        pink = '#dc0056',
+        purple = '#0000CD',
+      }
 
+      local diff = {
+        'diff',
+        colored = true,
+        symbols = { added = ' ', modified = ' ', removed = ' ' }, -- changes diff symbols
+        cond = hide_in_width,
+      }
+
+      local diagnostics = {
+        'diagnostics',
+        sources = { 'nvim_diagnostic' },
+        sections = { 'error', 'warn' },
+        symbols = { error = ' ', warn = ' ' },
+        colored = true,
+        update_in_insert = false,
+        always_visible = true,
+      }
+
+      local branch = {
+        'branch',
+        color = { fg = colors.cyan, gui = 'bold' },
+      }
+
+      local bubbles_theme = {
+        normal = {
+          a = { fg = colors.grey, bg = colors.grey },
+          b = { fg = colors.white, bg = colors.grey },
+          c = { fg = colors.grey, bg = colors.grey },
+        },
+
+        insert = {
+          a = { fg = colors.white, bg = colors.grey },
+          b = { fg = colors.white, bg = colors.grey },
+          c = { fg = colors.grey, bg = colors.grey },
+        },
+
+        visual = {
+          a = { fg = colors.white, bg = colors.grey },
+          b = { fg = colors.white, bg = colors.grey },
+          c = { fg = colors.grey, bg = colors.grey },
+        },
+        replace = {
+          a = { fg = colors.white, bg = colors.grey },
+          b = { fg = colors.white, bg = colors.grey },
+          c = { fg = colors.black, bg = colors.grey },
+        },
+        command = {
+          a = { fg = colors.white, bg = colors.grey },
+          b = { fg = colors.white, bg = colors.grey },
+          c = { fg = colors.grey, bg = colors.grey },
+        },
+        inactive = {
+          a = { fg = colors.white, bg = colors.black },
+          b = { fg = colors.white, bg = colors.black },
+          c = { fg = colors.black, bg = colors.black },
+        },
+      }
+
+      require('lualine').setup {
+        options = {
+          theme = bubbles_theme,
+          component_separators = '',
+          section_separators = { left = '', right = '' },
+        },
+        sections = {
+          lualine_a = {
+            --{ 'mode', separator = { left = '', right = ''  }, right_padding = 2 },
+          },
+          lualine_b = {
+            branch,
+            diff,
+            {
+              'filename',
+              file_status = true, -- displays file status (readonly status, modified status)
+              color = { fg = colors.white },
+              path = 2, -- 0 = just filename, 1 = relative path, 2 = absolute path
+            },
+          },
+          lualine_c = { 'fileformat' },
+          lualine_x = {},
+          lualine_y = {
+            { 'filetype', color = { fg = colors.white, gui = 'bold' } },
+            diagnostics,
+
+            { 'location', color = { fg = colors.white, gui = 'bold' } },
+            { 'progress', color = { fg = colors.white, gui = 'bold' }, left_padding = 2 },
+          },
+          lualine_z = {},
+        },
+        inactive_sections = {
+          lualine_a = { 'filename' },
+          lualine_b = {},
+          lualine_c = {},
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = { 'location' },
+        },
+        tabline = {},
+        extensions = {},
+      }
+    end,
+  },
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
     config = function()
@@ -947,17 +1069,17 @@ require('lazy').setup({
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = true } --vim.g.have_nerd_font }
+      --local statusline = require 'mini.statusline'
+      ---- set use_icons to true if you have a Nerd Font
+      --statusline.setup { use_icons = true } --vim.g.have_nerd_font }
 
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%2l:%-2v'
-      end
+      ---- You can configure sections in the statusline by overriding their
+      ---- default behavior. For example, here we set the section for
+      ---- cursor location to LINE:COLUMN
+      -----@diagnostic disable-next-line: duplicate-set-field
+      --statusline.section_location = function()
+      --  return '%2l:%-2v'
+      --end
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
