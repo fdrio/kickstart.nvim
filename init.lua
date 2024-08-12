@@ -797,7 +797,7 @@ require('lazy').setup({
         },
       },
       'saadparwaiz1/cmp_luasnip',
-
+      'kdheepak/cmp-latex-symbols',
       'f3fora/cmp-spell',
       -- Adds other completion capabilities.
       --  nvim-cmp does not ship with all sources by default. They are split
@@ -876,6 +876,12 @@ require('lazy').setup({
           { name = 'buffer' },
           { name = 'luasnip' },
           { name = 'path' },
+          {
+            name = 'latex_symbols',
+            option = {
+              strategy = 0, -- mixed
+            },
+          },
           {
             name = 'spell',
             option = {
