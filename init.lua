@@ -896,7 +896,22 @@ require('lazy').setup({
       }
     end,
   },
-
+  {
+    'amrbashir/nvim-docs-view',
+    lazy = true,
+    cmd = 'DocsViewToggle',
+    opts = {
+      position = 'right',
+      width = 60,
+    },
+  },
+  {
+    'killitar/obscure.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
+  { 'miikanissi/modus-themes.nvim', priority = 1000 },
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is.
